@@ -54,12 +54,26 @@ def _check_input_data(text):
 
         return dni, date, cp
 
+@bot.message_handler(commands=['start'])
+def start(message):
+	id_usuari = message.chat.id
+	nom_usuari = message.chat.first_name
+	print ("Comanda START executada por el ID: "+str(id_usuari)+" de nombre: "+str(nom_usuari))
+	
+	bot.send_message(message.from_user.id,DEFAULT_ERR)	
+
+@bot.message_handler(commands=['help'])
+def help(message):
+
+        bot.send_message(message.from_user.id,DEFAULT_ERR)
+
 @bot.message_handler(func=lambda message: True, content_types=["text"])
 def my_text(message):
 	id_usuari = message.chat.id
 	nom_usuari = message.chat.first_name
 	text = message.text.split(' ')
 	if len(text)!=3:
+		print('El usuari: '+str(id_usuari)+' de nom: '+str(nom_usuari)+' ha dit: '+str(text))
 		print("No es correcte")
 	else:
 		text=' '.join(text)
